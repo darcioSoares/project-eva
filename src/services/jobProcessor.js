@@ -1,8 +1,26 @@
 const jobQueue = require('./queueService');
 
-jobQueue.process(async (job) => {
-  console.log(`Processando job ${job.id} com dados:`, job.data);
-  return `Resultado do job ${job.id}`;
+jobQueue.process('processJourney', async (job) => {
+  try {
+    const { journeyId } = job.data;
+
+    console.log(`Processando jornada ID: ${journeyId}`);
+
+    const journey = await Journey.findById(journeyId);
+    if (!journey) {
+      throw new Error('Journey not found');
+    }
+
+    // Atualizar a jornada como concluída
+    journey.completedAt = new Date();
+    await journey.save();
+
+    console.log(`✅ Jornada ${journeyId} concluída em ${journey.completedAt}`);
+    return `Journey ${journeyId} processed successfully`;
+  } catch (error) {
+    console.error(`Erro ao processar a jornada:`, error);
+    throw error;
+  }
 });
 
 jobQueue.on('completed', (job, result) => {

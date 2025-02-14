@@ -2,12 +2,13 @@ require('dotenv').config();
 const express = require('express');
 const connectDB = require('./config/database');
 const jobRoutes = require('./routes/jobRoutes');
-require('./services/jobProcessor');
 
 const bullDashboard = require('./services/bullDashboard');
-
 const employeeRoutes = require('./routes/employeeRoutes');
 const journeyRoutes = require('./routes/journeyRoutes');
+
+//
+require('./services/jobProcessor');
 
 const app = express();
 const port = 3000;

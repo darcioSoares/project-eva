@@ -1,12 +1,27 @@
 const Journey = require('../models/Journey');
+const jobQueue = require('../services/queueService');
 
 exports.createJourney = async (req, res) => {
   try {
-    const journey = new Journey(req.body);
+    const { activity, employeeId, startDate } = req.body;
+
+    if (!activity || !employeeId || !startDate) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+  
+    const journey = new Journey({ activity, employeeId, startDate });
     await journey.save();
-    res.status(201).json(journey);
+   
+    const delay = new Date(startDate).getTime() - Date.now();
+    await jobQueue.add(
+      'processJourney',
+      { journeyId: journey._id },
+      { delay: Math.max(delay, 0) } //job não seja agendado no passado
+    );
+
+    res.status(201).json({ message: 'Journey created and job scheduled', journey });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
