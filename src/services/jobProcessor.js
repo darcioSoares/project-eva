@@ -1,34 +1,88 @@
 const jobQueue = require('./queueService');
+const Journey = require('../models/Journey');
+const connectDB = require('../config/database');
 
-jobQueue.process('processJourney', async (job) => {
+jobQueue.add(
+  'checkJourneys',
+  {},
+  { repeat: { cron: '*/3 * * * *' } } // Executa a cada 30 -> minutos esta para 3 min 
+);
+
+async function checkPendingJourneys() {
   try {
-    const { journeyId } = job.data;
+    await connectDB(); 
 
-    console.log(`Processando jornada ID: ${journeyId}`);
+    const todayString = new Date().toISOString().split("T")[0]; //'2025-02-15'
+   
+    //teste "2025-02-16"
+    const formattedStartDate = new Date(todayString);
+    formattedStartDate.setUTCHours(0, 0, 0, 0); 
 
-    const journey = await Journey.findById(journeyId);
-    if (!journey) {
-      throw new Error('Journey not found');
+    const formattedEndDate = new Date(todayString);
+    formattedEndDate.setUTCHours(23, 59, 59, 999);
+
+    console.log(`📅 Buscando jornadas entre ${formattedStartDate.toISOString()} e ${formattedEndDate.toISOString()}`);
+
+  
+    const journeys = await Journey.find({
+      startDate: { 
+        $gte: formattedStartDate,
+        $lte: formattedEndDate 
+      },
+      completedAt: null // Apenas jornadas não concluídas
+    });
+
+    console.log(`🔍 Foram encontradas ${journeys.length} jornadas pendentes para hoje.`);
+
+    if (journeys.length === 0) {
+      console.log('✅ Nenhuma jornada para processar.');
+      return;
     }
 
-    // Atualizar a jornada como concluída
-    journey.completedAt = new Date();
-    await journey.save();
+    journeys.forEach((journey) => {
+      jobQueue.add('processJourney', {
+        journeyId: journey._id,
+        email: journey.email_employee,
+        activity: journey.activity,
+        startDate: journey.startDate,
+      });
+    });
 
-    console.log(`✅ Jornada ${journeyId} concluída em ${journey.completedAt}`);
-    return `Journey ${journeyId} processed successfully`;
+    console.log(`📌 ${journeys.length} jornadas adicionadas à fila.`);
   } catch (error) {
-    console.error(`Erro ao processar a jornada:`, error);
-    throw error;
+    console.error('❌ Erro ao verificar jornadas:', error);
+  }
+}
+
+// 🔥 Garantir que o processamento inicie corretamente
+(async () => {
+  await checkPendingJourneys();
+})();
+
+// 🔥 Configurar o job recorrente corretamente
+jobQueue.process('checkJourneys', async () => {
+  console.log(`✅✅✅✅✅✅ a cada 2 min ✅✅✅✅✅`);
+  await checkPendingJourneys();
+});
+
+// Adicionar o Processador para `processJourney`
+jobQueue.process('processJourney', async (job) => {
+  console.log(`⚡ Job ${job.id} começou a ser processado.`);
+  console.log(`📌 Dados do job: ${JSON.stringify(job.data)}`);
+
+  try {
+    const { journeyId, email, activity, startDate } = job.data;
+
+    console.log(`📧 Simulando envio de e-mail para ${email}`);
+    console.log(`📌 Atividade: ${activity}`);
+    console.log(`📅 Data e Hora: ${startDate}`);
+  
+    await Journey.findByIdAndUpdate(journeyId, { completedAt: new Date() });
+
+    console.log(`✅ Jornada ${journeyId} marcada como concluída.`);
+  } catch (error) {
+    console.error(`❌ Erro ao processar o job ${job.id}:`, error);
   }
 });
 
-jobQueue.on('completed', (job, result) => {
-  console.log(`Job ${job.id} concluído com resultado: ${result}`);
-});
-
-jobQueue.on('failed', (job, err) => {
-  console.error(`Job ${job.id} falhou:`, err);
-});
-
-console.log('Processador de Jobs do BullJS iniciado');
+console.log('🛠️ Processadores do BullJS configurados corretamente.');

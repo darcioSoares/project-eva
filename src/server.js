@@ -21,9 +21,7 @@ app.use('/employees', employeeRoutes);
 app.use('/journeys', journeyRoutes);
 app.use('/jobs', jobRoutes);
 
-
 app.use('/admin/queues', bullDashboard);
-
 
 app.listen(port, () => {
   console.log(`🚀 Server running on port ${port}`);
