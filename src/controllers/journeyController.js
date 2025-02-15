@@ -3,9 +3,9 @@ const jobQueue = require('../services/queueService');
 
 exports.createJourney = async (req, res) => {
   try {
-    const { activity, employeeId, email_employee, startDate } = req.body;
+    const { activity, employeeId, email_employee, startDate, description } = req.body;
 
-    if (!activity || !employeeId || !email_employee || !startDate) {
+    if (!activity || !employeeId || !email_employee || !startDate || !description) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
@@ -13,6 +13,7 @@ exports.createJourney = async (req, res) => {
 
     const journey = new Journey({
       activity,
+      description,
       employeeId,
       email_employee,
       startDate: formattedStartDate
@@ -28,7 +29,7 @@ exports.createJourney = async (req, res) => {
 
 exports.getJourneys = async (req, res) => {
   try {
-    const journeys = await Journey.find().populate('employeeId');
+    const journeys = await Journey.find();
     res.json(journeys);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -37,7 +38,7 @@ exports.getJourneys = async (req, res) => {
 
 exports.getJourneyById = async (req, res) => {
   try {
-    const journey = await Journey.findById(req.params.id).populate('employeeId');
+    const journey = await Journey.findById(req.params.id)
     if (!journey) return res.status(404).json({ message: 'Journey not found' });
     res.json(journey);
   } catch (error) {
@@ -53,21 +54,19 @@ exports.getJourneysByDateRange = async (req, res) => {
     if (!startDate || !endDate) {
       return res.status(400).json({ error: "Both startDate and endDate are required" });
     }
-
-    // 🔥 Converte as datas para objetos `Date`
+ 
     const formattedStartDate = new Date(startDate);
-    formattedStartDate.setUTCHours(0, 0, 0, 0); // Início do dia
+    formattedStartDate.setUTCHours(0, 0, 0, 0);
 
     const formattedEndDate = new Date(endDate);
-    formattedEndDate.setUTCHours(23, 59, 59, 999); // Final do dia
+    formattedEndDate.setUTCHours(23, 59, 59, 999);
 
     console.log(`📅 Filtrando jornadas entre ${formattedStartDate.toISOString()} e ${formattedEndDate.toISOString()}`);
 
-    // 🔥 Busca no MongoDB todas as jornadas dentro do intervalo
     const journeys = await Journey.find({
       startDate: { 
-        $gte: formattedStartDate, // Começa no início da data especificada
-        $lte: formattedEndDate // Termina no final da data especificada
+        $gte: formattedStartDate,
+        $lte: formattedEndDate 
       }
     });
 
