@@ -44,6 +44,7 @@ async function checkPendingJourneys() {
         journeyId: journey._id,
         email: journey.email_employee,
         activity: journey.activity,
+        description: journey.description,
         startDate: journey.startDate,
       });
     });
@@ -71,11 +72,12 @@ jobQueue.process('processJourney', async (job) => {
   console.log(`📌 Dados do job: ${JSON.stringify(job.data)}`);
 
   try {
-    const { journeyId, email, activity, startDate } = job.data;
+    const { journeyId, email, activity, startDate, description } = job.data;
 
     console.log(`📧 Simulando envio de e-mail para ${email}`);
     console.log(`📌 Atividade: ${activity}`);
     console.log(`📅 Data e Hora: ${startDate}`);
+    console.log(`📅 Descrição : ${description}`);
   
     await Journey.findByIdAndUpdate(journeyId, { completedAt: new Date() });
     console.log(`✅ Jornada ${journeyId} marcada como concluída.`);
