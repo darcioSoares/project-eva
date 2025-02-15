@@ -7,11 +7,17 @@ const bullDashboard = require('./services/bullDashboard');
 const employeeRoutes = require('./routes/employeeRoutes');
 const journeyRoutes = require('./routes/journeyRoutes');
 
+const cors = require("cors");
 //
 require('./services/jobProcessor');
 
 const app = express();
 const port = 3000;
+
+app.use(cors({
+  origin: "*", 
+  credentials: true,
+}));
 
 connectDB();
 

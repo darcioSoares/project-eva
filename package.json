@@ -13,6 +13,7 @@
   "dependencies": {
     "bull": "^4.16.5",
     "bull-board": "^2.1.3",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "ioredis": "^5.5.0",
