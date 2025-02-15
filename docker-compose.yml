@@ -13,7 +13,7 @@ services:
       - "3000:3000"
     volumes:
       - .:/usr/src/app
-    command: npm run dev
+    command: sh -c "npm run dev & node src/services/jobProcessor.js"
 
   mongodb:
     image: mongo:6.0
