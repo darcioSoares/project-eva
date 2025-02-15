@@ -61,7 +61,7 @@ async function checkPendingJourneys() {
 
 // 🔥 Configurar o job recorrente corretamente
 jobQueue.process('checkJourneys', async () => {
-  console.log(`✅✅✅✅✅✅ a cada 2 min ✅✅✅✅✅`);
+  console.log(`✅✅✅✅✅✅ a cada 3 min ✅✅✅✅✅`);
   await checkPendingJourneys();
 });
 
@@ -78,8 +78,10 @@ jobQueue.process('processJourney', async (job) => {
     console.log(`📅 Data e Hora: ${startDate}`);
   
     await Journey.findByIdAndUpdate(journeyId, { completedAt: new Date() });
-
     console.log(`✅ Jornada ${journeyId} marcada como concluída.`);
+
+    return { status: 'OK', processedAt: new Date().toISOString() };
+        
   } catch (error) {
     console.error(`❌ Erro ao processar o job ${job.id}:`, error);
   }
