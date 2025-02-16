@@ -20,15 +20,6 @@ class EmployeeService {
     }
   }
 
-  static async getEmployeeById(id) {
-    try {
-      const employee = await Employee.findById(id);
-      if (!employee) throw new Error('Employee not found');
-      return employee;
-    } catch (error) {
-      throw new Error(error.message);
-    }
-  }
 }
 
 module.exports = EmployeeService;

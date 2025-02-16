@@ -22,11 +22,4 @@ exports.getEmployees = async (req, res) => {
   }
 };
 
-exports.getEmployeeById = async (req, res) => {
-  try {
-    const employee = await EmployeeService.getEmployeeById(req.params.id);
-    res.json(employee);
-  } catch (error) {
-    res.status(error.message === 'Employee not found' ? 404 : 500).json({ error: error.message });
-  }
-};
+

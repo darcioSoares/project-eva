@@ -27,36 +27,7 @@ class JourneyService {
     }
   }
 
-  static async getJourneyById(id) {
-    try {
-      const journey = await Journey.findById(id);
-      if (!journey) throw new Error('Journey not found');
-      return journey;
-    } catch (error) {
-      throw new Error(error.message);
-    }
-  }
-
-  static async getJourneysByDateRange(startDate, endDate) {
-    try {
-      const formattedStartDate = new Date(startDate);
-      formattedStartDate.setUTCHours(0, 0, 0, 0);
-
-      const formattedEndDate = new Date(endDate);
-      formattedEndDate.setUTCHours(23, 59, 59, 999);
-
-      console.log(`📅 Filtrando jornadas entre ${formattedStartDate.toISOString()} e ${formattedEndDate.toISOString()}`);
-
-      return await Journey.find({
-        startDate: { 
-          $gte: formattedStartDate,
-          $lte: formattedEndDate
-        }
-      });
-    } catch (error) {
-      throw new Error(error.message);
-    }
-  }
 }
+
 
 module.exports = JourneyService;
