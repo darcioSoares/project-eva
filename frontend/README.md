@@ -19,7 +19,7 @@ Esta é a estrutura do Projeto Frontend.
 ```
 --------------------------------------------------------------------------------
 ## Informaçoes importantes para aplicação
-- Ao acessar aplicação entrar diretamente um uma tela de login, pode acessar direto que ira para o dashboard
+- Ao acessar a aplicação ira entrar diretamente um uma tela de login, pode acessar direto que ira para o dashboard
 - Criar um colaborador
 - Criar uma jornada associada a um colaborador 
 - Listar jornadas

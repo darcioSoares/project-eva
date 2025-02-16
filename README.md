@@ -11,7 +11,7 @@ Renomeie o arquivo .env-exemplo para .env que se encontra dentro da pasta backen
 
 mv .env-exemplo .env
 
-Já esta com os valores a ser ultilizado pela aplicação
+Já esta com os valores a ser utilizado pela aplicação
 
 ## 2. Suba os containers com Docker: (Executar dentro da Raiz do projeto)
 
@@ -26,13 +26,12 @@ Este comando irá subir os containers necessários para a aplicação.
 
 ## Comandos para aplicação
 ### Para entrar no bash da app e rodar os teste ou força o job a execultar naquele exato momento
-docker exec -it app_backend sh
-node src/services/jobProcessor.js
-npm test
+- docker exec -it app_backend sh
+- node src/services/jobProcessor.js
+- npm test
 
-### Verificar logs do backend, consegue ver os jobs sendo execultados
+### Verificar logs do backend, para ver os jobs sendo execultados
 - docker logs -f app_backend (logs backend)
-
 - docker-compose restart backend (restart container)
 
 --------------------------------------------------------------------------------

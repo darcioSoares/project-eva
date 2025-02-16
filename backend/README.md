@@ -40,8 +40,8 @@ Esta é a estrutura do Projeto.
 --------------------------------------------------------------------------------
 ## Informaçoes importantes para aplicação
 - docker exec -it app_backend sh (entrar no bash)
-- node src/services/jobProcessor.js (Força o job)
-- npm test (gerar os teste)
+- node src/services/jobProcessor.js (Forçar o job)
+- npm test (teste) OBS Primeiro entre no bash docker exec -it app_backend sh depois execulte o comando
 
 # Bull Dasboard 
 - http://localhost:3000/admin/queues/queue/jobQueue (para acompanhar as filas)
