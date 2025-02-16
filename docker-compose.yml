@@ -13,6 +13,7 @@ services:
       - "3000:3000"
     volumes:
       - ./backend:/usr/src/app
+      - /usr/src/app/node_modules
     command: sh -c "npm run dev & node src/services/jobProcessor.js"
 
   frontend:
