@@ -31,6 +31,19 @@ No backend, há um job recorrente que roda a cada 3 minutos (configuração ajus
 Com esse fluxo, o sistema garante que as jornadas sejam processadas automaticamente, sem necessidade de intervenção manual, permitindo um gerenciamento eficiente das atividades dos colaboradores.
 
 --------------------------------------------------------------------------------
+# Observação 
+
+- Ao subir o docker compose, sobe todas as dependencias, redis, mongodb bankend e frontend
+
+- Já adicionei no docker-compose o comando para subir os jobs tambem, iniciando junto com o backend
+
+- Tem um Painel do bull Dashbord para acompanhar 
+
+- No caso, o processamento das filas, estão só sendo logadas no terminal, se estiver com o terminal aberto 
+usando esse comando docker logs -f app_backend, ira aparecer os jobs. Esta simulando um envio de email. 
+Pensei em colocar um, mas achei melhor não, para não ter risco de atrasar. Porem Ali, poderia colocar uma chamada API, uma função para envio de email. que o codigo já iria funcionar. 
+--------------------------------------------------------------------------------
+
 
 # Passo a passo para rodar a aplicação
 
