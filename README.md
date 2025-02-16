@@ -33,17 +33,17 @@ Com esse fluxo, o sistema garante que as jornadas sejam processadas automaticame
 --------------------------------------------------------------------------------
 # Observação 
 
-- Ao subir o docker compose, sobe todas as dependencias, redis, mongodb banckend e frontend
+- Dentro de Backend e Frontend tem README de cada um, falando em detalhes o funcionamento.
 
-- Já adicionei no docker-compose o comando para subir os jobs tambem, iniciando junto com o backend
+- Ao subir o docker compose, sobe todas as dependencias, redis, mongodb banckend e frontend.
 
-- Tem um Painel do bull Dashbord para acompanhar 
+- Já adicionei no docker-compose o comando para subir os jobs tambem, iniciando junto com o backend.
+
+- Tem um Painel do bull Dashbord para acompanhar. 
 
 - No caso, o processamento das filas, estão só sendo logadas no terminal, se estiver com o terminal aberto 
 usando esse comando docker logs -f app_backend, ira aparecer os jobs. Esta simulando um envio de email. 
-Pensei em colocar um, mas achei melhor não, para não ter risco de atrasar. Porem Ali, poderia colocar uma chamada API, uma função para envio de email. que o codigo já iria funcionar. 
 --------------------------------------------------------------------------------
-
 
 # Passo a passo para rodar a aplicação
 
@@ -64,12 +64,11 @@ Já esta com os valores a ser utilizado pela aplicação
 
 Dentro da pasta do projeto, use o comando:
 
-- docker compose build  ou add '--no-cache' (criar as imagens)
+- docker compose build  ou docker compose build '--no-cache' (criar as imagens)
 - docker compose up -d (subir os containers)
 - docker compose down (derrubar os containers)
 
 Este comando irá subir os containers necessários para a aplicação.
-
 
 ## Comandos para aplicação
 ### Para entrar no bash da app e rodar os teste ou força o job a execultar naquele exato momento

@@ -25,6 +25,10 @@ Esta é a estrutura do Projeto Frontend.
 - Listar jornadas
 - Sair
 
+- Tem algumas regras de validaçoes na data, não permitindo data que já passou.
+- Quando o job e rodado e execulta a jornada, em listar Jornada, na coluna concluido, ele muda para a data que foi concluida. 
+
+
 ## Aplicação roda
 - http://localhost:5173/
 --------------------------------------------------------------------------------
