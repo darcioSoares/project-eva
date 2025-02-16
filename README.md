@@ -1,3 +1,37 @@
+# Organização da Estrutura
+--------------------------------------------------------------------------------
+- A estrutura MVC (Model-View-Controller) foi escolhida para organizar o projeto de forma clara e escalável. No entanto, para manter a separação de responsabilidades e facilitar a manutenção do código, foi adicionado um nível extra de Services.
+
+- Controllers: Responsáveis por receber as requisições HTTP, validar os dados da entrada e chamar os serviços apropriados.
+Dessa forma, os controladores ficam mais enxutos e focados na comunicação entre a API e o cliente.
+
+- Services: Contêm toda a lógica de negócio da aplicação. Esse design evita que os controllers fiquem sobrecarregados com regras de validação e manipulação de dados, tornando o código mais modular e reutilizável.
+
+- Models: Representam a estrutura das entidades no banco de dados e são responsáveis pela interação com a camada de persistência
+
+## Descrição do Projeto
+📝 Descrição do Projeto
+O projeto permite a criação de colaboradores, armazenando informações como nome, e-mail e telefone. Com os colaboradores cadastrados, é possível criar jornadas, que são atividades associadas a um colaborador específico.
+
+## Criação de Jornadas
+Ao criar uma jornada, é necessário fornecer:
+- Atividade – Exemplo: "Reunião com diretores"
+- Descrição – Exemplo: "Apresentar MVP do projeto"
+- Data de execução – Define quando a jornada será processada automaticamente
+
+O sistema permite o agendamento de múltiplas jornadas para diferentes colaboradores, garantindo que cada um tenha suas atividades bem organizadas.
+
+⏳ Execução Automática via Job Scheduler
+No backend, há um job recorrente que roda a cada 3 minutos (configuração ajustável para horas em produção). Esse job verifica no banco de dados se há jornadas programadas para o dia atual.
+
+1️⃣ Se houver jornadas pendentes, elas são adicionadas à fila de processamento (usando BullJS e Redis).
+2️⃣ Assim que executadas, a jornada é marcada como concluída no banco de dados, preenchendo o campo completedAt com a data e hora da execução.
+3️⃣ Jornadas com completedAt: null ainda não foram executadas
+
+Com esse fluxo, o sistema garante que as jornadas sejam processadas automaticamente, sem necessidade de intervenção manual, permitindo um gerenciamento eficiente das atividades dos colaboradores.
+
+--------------------------------------------------------------------------------
+
 # Passo a passo para rodar a aplicação
 
 1. Clone o repositório:
