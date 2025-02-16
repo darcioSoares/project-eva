@@ -64,7 +64,7 @@ Já esta com os valores a ser utilizado pela aplicação
 
 Dentro da pasta do projeto, use o comando:
 
-- docker compose build --no-cache (criar as imagens)
+- docker compose build '--no-cache' (criar as imagens)
 - docker compose up -d (subir os containers)
 - docker compose down (derrubar os containers)
 
