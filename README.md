@@ -33,7 +33,7 @@ Com esse fluxo, o sistema garante que as jornadas sejam processadas automaticame
 --------------------------------------------------------------------------------
 # Observação 
 
-- Ao subir o docker compose, sobe todas as dependencias, redis, mongodb bankend e frontend
+- Ao subir o docker compose, sobe todas as dependencias, redis, mongodb banckend e frontend
 
 - Já adicionei no docker-compose o comando para subir os jobs tambem, iniciando junto com o backend
 

@@ -2,14 +2,15 @@ FROM node:18-alpine
 
 WORKDIR /usr/src/app
 
-# Copiar package.json e package-lock.json antes de instalar as dependências
 COPY package.json package-lock.json ./
 
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 COPY . .
 
 EXPOSE 3000
 
-#CMD ["node", "server.js"]
+RUN chown -R node:node /usr/src/app
+USER node
+
 CMD ["npm", "run", "dev"]
