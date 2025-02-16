@@ -64,7 +64,7 @@ Já esta com os valores a ser utilizado pela aplicação
 
 Dentro da pasta do projeto, use o comando:
 
-- docker compose build '--no-cache' (criar as imagens)
+- docker compose build  ou add '--no-cache' (criar as imagens)
 - docker compose up -d (subir os containers)
 - docker compose down (derrubar os containers)
 
@@ -79,7 +79,7 @@ Este comando irá subir os containers necessários para a aplicação.
 
 ### Verificar logs do backend, para ver os jobs sendo execultados
 - docker logs -f app_backend (logs backend)
-- docker-compose restart backend (restart container)
+- docker compose restart backend (restart container)
 
 --------------------------------------------------------------------------------
 # Tecnologias Utilizadas

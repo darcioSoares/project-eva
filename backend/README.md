@@ -39,8 +39,9 @@ Esta é a estrutura do Projeto.
 ```
 --------------------------------------------------------------------------------
 ## Informaçoes importantes para aplicação
+- docker logs -f app_backend (logs backend) Se deixar aberto, irá ver os jobs sendo processados.
 - docker exec -it app_backend sh (entrar no bash)
-- node src/services/jobProcessor.js (Forçar o job)
+- node src/services/jobProcessor.js (Forçar o job) OBS Primeiro entre no bash docker exec -it app_backend sh
 - npm test (teste) OBS Primeiro entre no bash docker exec -it app_backend sh depois execulte o comando
 
 # Bull Dasboard 
