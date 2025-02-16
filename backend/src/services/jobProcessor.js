@@ -62,7 +62,7 @@ async function checkPendingJourneys() {
 
 // 🔥 Configurar o job recorrente corretamente
 jobQueue.process('checkJourneys', async () => {
-  console.log(`✅✅✅✅✅✅ a cada 3 min ✅✅✅✅✅`);
+  console.log(`✅ a cada 3 min ✅`);
   await checkPendingJourneys();
 });
 
@@ -74,6 +74,7 @@ jobQueue.process('processJourney', async (job) => {
   try {
     const { journeyId, email, activity, startDate, description } = job.data;
 
+    console.log(`✅✅✅✅✅✅ Iniciando um Processo Assicrono ✅✅✅✅✅`);
     console.log(`📧 Simulando envio de e-mail para ${email}`);
     console.log(`📌 Atividade: ${activity}`);
     console.log(`📅 Data e Hora: ${startDate}`);
